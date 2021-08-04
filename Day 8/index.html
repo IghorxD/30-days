@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="draw" width="800 " height="800"></canvas>
+    <script>
+        const canvas = document.querySelector('#draw');
+        const ctx = canvas.getContext('2d'); // getContext() retorna um contexto de desenho no canvas 
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.strokeStyle = '#BADASS';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 100;
+
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let hue = 0;
+        let direction = true;
+        
+        function draw(e) { 
+            if(!isDrawing) return;
+            console.log(e)
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`; // hsl é um tipo de dado CSS que indica uma cor no espaço sRGB. Nesse caso esta sendo descrita dessa forma: usando o sistema de coordenada-cilíndrica HSL.
+            ctx.beginPath(); 
+            ctx.moveTo(lastX, lastY); // Definindo os Eixos que o mouse vai se mover.
+            ctx.lineTo(e.offsetX, e.offsetY); // Definindo os Eixos de linha.
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+
+            hue++; // Interpolando os color do RGB 
+            if (hue >= 360) {
+                hue = 0;
+            }
+            // Definindo os limites de RGBS.
+            if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+                direction = !direction;
+            }
+            // Definindo os limites da Largura dos traçados.
+            if (direction) {
+                ctx.lineWidth++;
+            } else {
+                ctx. lineWidth--;
+            }
+            // Quando os limites da Largura dos traçados chegarem nos seus limites, eles se reiniciam.
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+        // Vai disparar um evento toda vez que clicarmos e mexermos o mouse. Nesse caso resultando nas cores RGBS alternando e aumenta e reduzindo a largura dos traçados.
+
+        canvas.addEventListener('mousemove', draw); // Dispara um evento toda vez que mexer o mouse.
+        canvas.addEventListener('mouseup', () => isDrawing = false); // Dispara um evento toda vez que paramos de mexer no mouse.
+        canvas.addEventListener('mouseuout', () => isDrawing = false); // Dispara um evento toda vez que soltamos o mouse.
+    </script>
+
+    <style>
+        html,body {
+            margin: 0;
+        }
+    </style>
+</body>
+</html>

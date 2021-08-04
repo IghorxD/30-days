@@ -71,24 +71,34 @@
 
 <script>
     
-    function playSound(e) {
+    function playSound(e) { // Função "playSound" que vai tocar o som. Tem um parámentro (e).
       const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+      // Criei uma const "key" que vai receber os valors das divs criadas nas linhas 13-59.
+      //Alterando o valor de "div[data-key]" para "${e.keyCode}". Esse "e" é parámetro da função.  
+      // Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+      // Que vai fazer com que essas const recebem um Element DOM.
       const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-      if (!audio) return; 
+      // Criei uma const "audio" que vai receber os valores dos dados dos audios criadas nas linhas 62-70.
+      //Alterando o valor de "audio[data-key]" para "${e.keyCode}". Esse "e" é parámetro da função.  
+      // Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+      // Que vai fazer com que essas const recebem um Element DOM.
+      if (!audio) return;  
   
-      key.classList.add('playing');
-      audio.currentTime = 0; // Rebobinar o Som
-      audio.play();
+      key.classList.add('playing'); // Utilizamos um classList para adicionar dentro da "key" uma classe chamada "playing".
+      audio.currentTime = 0; // Essa linha serve para resetar o time do audio ao ser iniciado. 
+      audio.play(); // Reproduzir o Audio 
     }
 
-    function removeTransition(e) {
-      if (e.propertyName !== 'transform') return; // Skip se não for !== tranform
-      e.target.classList.remove('playing');
+    function removeTransition(e) { // Função "removeTransition" que vai remover a transição de quando apertamos as teclas (da bateria no caso).
+      if (e.propertyName !== 'transform') return; //Se o parametro da função (e) (propertyName = O nome exato de um objeto) achar o  objeto diferente de "transform", retorne;
+      e.target.classList.remove('playing'); // O parámetro da fumção (e) vai procurar e remover uma determinada classe (playing)
     }
   
-    const keys = Array.from(document.querySelectorAll('.key'));
-    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-    window.addEventListener('keydown', playSound);
+    const keys = Array.from(document.querySelectorAll('.key')); 
+    // Criei uma const "keys" que utilizando um Array.from cria uma nova instância de um Array.
+    //Utilizando um DOM a const "keys" vai receber o valor de TODAS as .key
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // Para cada key que precionarmos, dispara um evento que vai rodar a função de remover a transição; 
+    window.addEventListener('keydown', playSound);  // Adicionar um evento que quando presionar a tecla, disparar um evento que vai rodar a função de tocar o som;
   </script>
 
 

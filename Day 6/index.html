@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+// Criei uma const "endpoint" com os Dados das Cidades e dos Estados Americanos. 
+
+const cities = []; // Criei uma const "cities" que vai receber um bloco de array []
+fetch(endpoint) // fornece o método global fetch() que fornece uma maneira fácil e lógica para buscar recursos de forma assíncrona através da rede. Nesse caso está puxando os dados da "endpoint"
+  .then(table => table.json()) // Basicamente essa linha vai pegar de dentro dos dados adquiridos no fetch e vai dar usar um Array Function (table => table.json()) para retornar os OBJETOS do JSON
+  .then(data => cities.push(...data)); // Basicamente essa linha usar um Array Function ((data => cities.push(...data)), que vai retornar separatamente, utilizando os (...) todos os itens (cities) do Array.
+  // ?
+
+function findMatches(wordToMatch, cities) { // Criei uma function "findMatches" com dois parámentros (worldToMatch, cities)
+  return cities.filter(place => { // Retorne as cities filtrando... Criei um Array 
+    const regex = new RegExp(wordToMatch, 'gi'); // Dentro do Arrat criei uma const "regex" que vai receber um new RegExp (O RegExp é usado para combinar o texto com um padrão.). E depois usamos os parámetros da função
+    // (wordToMatch) juntamente com o valor de "gi" , mas poderia ser qualquer um.
+    return place.city.match(regex) || place.state.match(regex) // Depois disso retornamos uma "place.city.match(regex)" que vai retornar os dados das cities. "match(regex)" faz essa função de localizar.
+                                                               //  Depois disso retornamos uma " place.state.match(regex)" que vai retornar os dados dos states. "match(regex)" faz essa função de localizar.
+  });
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+//Criei uma função "numberWithCommas" com parámetro (x)
+//Dei um return x.toString().replace para me retornar uma String e não um Number. E subsituir os valores. 
+// 
+
+function displayMatches() { 
+  // Criei uma function "displayMatches" 
+  const matchArray = findMatches(this.value, cities);
+  // Criei uma const "matchArray". findMatch(this.value, cities) que tem como objetivo encontrar as cities dentro do array 
+  const html = matchArray.map(place => {
+    // const "html" que vai retornar o valor original das cities utilizando a método map, junto com uma Array Function
+    const regex = new RegExp(this.value, 'gi'); // ?
+    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`); // ?
+    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`); // ?
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(place.population)}</span>
+      </li>
+    `;
+  }).join('');
+  suggestions.innerHTML = html;
+}
+// Na linha 54 vão retornar os valores do "cityName" e do "stateName".
+// Na linha 56 vai retornar os valores da população que foi criada na linha 36.
+
+const searchInput = document.querySelector('.search'); 
+// Criei a const "searchInput" que vai alterar o elementi do search.
+// Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+// Que vai fazer com que essas const recebem um Element DOM.
+const suggestions = document.querySelector('.suggestions');
+// Criei a const "searchInput" que vai alterar o elementi do suggestions.
+// Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+// Que vai fazer com que essas const recebem um Element DOM.
+
+searchInput.addEventListener('change', displayMatches); 
+searchInput.addEventListener('keyup', displayMatches);
+
+ // Basicamente na linha (73) é utilizado um addEventListener (change) que vai disparar uma função, nesse caso, "displayMatches" que vai ser inicializado ao mudar o search clicando fora do input.
+ // Basicamente na linha (74) é utilizado um addEventListener (keyup) que vai disparar uma função, nesse caso, "displayMatches" que vai ser inicializado toda vez que você alterar o search dentro da barra.
+
+</script>
+  </body>
+</html>)

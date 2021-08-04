@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Clock</title>
+</head>
+    
+<body>
+
+   <div class="clock">               <!-- CRIAÇÃO DE TODAS AS DIVS DO RELÓGIO -->
+  <div class="clock-face">
+      <div class="hand second-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand hour-hand"></div>
+  </div>
+</div>
+
+<div id="time">
+  Hora aqui
+</div>
+
+<script>
+  // Criei 3 const que recebem as Divs (Linha 13-19).
+  // Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+  // Que vai fazer com que essas const recebem um Element DOM.
+const secondHand = document.querySelector('.second-hand');   
+const minsHand = document.querySelector('.min-hand');
+const hourHand = document.querySelector('.hour-hand');
+
+function setDate() {        // FUNÇÃO PARA "RODAR" O RELÓGIO..
+const now = new Date();     // Criei uma const now que vai receber um Date Object (Hora atual do Local Time)
+
+const seconds = now.getSeconds();  // Criei uma const "seconds" que vai receber os valores do "now" (Date Object) e utilizando o método "get.seconds" conseguimos acessar somente os segundos. 
+const secondsDegrees = ((seconds / 60) * 360) + 90;  // Criei uma const "secondsDegress" que utilizando matemática, consegue posicionar exatamente o ponteiro dos segundos dentro do relógio.
+secondHand.style.transform = `rotate(${secondsDegrees}deg)`; 
+// "secondHand" é a const que criamos para receber os Elementos DOM. Nessa linha estamos alterando a rotação do segundo diretamente do CSS!
+// Antes todos os ponteiros tinha a mesma rotação dentro do CSS, o que essa linha faz é basicamente é atribuir uma nova rotação para os segundos alterando seu valor inicial e subtitiundo pelo "secondsDegress"
+
+const mins = now.getMinutes();  // Criei uma const "mins" que vai receber os valores do "now" (Date Object) e utilizando o método "get.minutes" conseguimos acessar somente os minutos.
+const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;  // Criei uma const "minsDegress" que utilizando matemática, consegue posicionar exatamente o ponteiro dos minutos dentro do relógio.
+minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+// "minsHand" é a const que criamos para receber os Elementos DOM. Nessa linha estamos alterando a rotação do minuto diretamente do CSS!
+// Antes todos os ponteiros tinha a mesma rotação dentro do CSS, o que essa linha faz é basicamente é atribuir uma nova rotação para os segundos alterando seu valor inicial e subtitiundo pelo "minsDegress"
+
+const hour = now.getHours();  // Criei uma const "hour" que vai receber os valores do "now" (Date Object) e utilizando o método "get.hours" conseguimos acessar somente as horas.
+const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;  // // Criei uma const "hourDegress" que utilizando matemática, consegue posicionar exatamente o ponteiro das horas dentro do relógio.
+hourHand.style.transform = `rotate(${hourDegrees}deg)`; 
+// "secondHand" é a const que criamos para receber os Elementos DOM. Nessa linha estamos alterando a rotação da hora diretamente do CSS!
+// Antes todos os ponteiros tinha a mesma rotação dentro do CSS, o que essa linha faz é basicamente é atribuir uma nova rotação para os segundos alterando seu valor inicial e subtitiundo pelo "hourDegress"
+
+function relogio(){
+  var data = new Date(); 
+  var hora = data.getHours();
+  var min = data.getMinutes();
+  var seg = data.getSeconds();
+
+  var horas = `${hora}:${min}:${seg}`
+  var tempo = document.getElementById('time')
+  tempo.innerHTML = horas;
+}
+
+  var tempo= setInterval(relogio,1000);
+
+
+}
+
+setInterval(setDate, 1000);
+
+setDate(); // CHAMANDO A FUNÇÃO
+
+
+</script>
+
+  
+
+
+
+
+

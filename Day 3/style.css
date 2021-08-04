@@ -1,0 +1,30 @@
+:root { /*Declaração de uma Variável CSS Global (< especificidade) )*/
+    --base: #ffc600;
+    --spacing: 10px;
+    --blur: 10px;
+        }
+
+    img {
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur)); /*Não entendi pq ele chamou Blur 2 vezes (Perguntar pra eles.)*/
+        height: 500px;
+        }
+        
+    body {
+        text-align: center;
+        background: #193549;
+        color: white;
+        font-family: 'helvetica neue', sans-serif;
+        font-weight: 100px;
+        font-size: 50px;
+        }
+        
+    .controls {
+        margin-top: 50px;
+        }
+    
+     .input {
+         width: 100px;
+     }       
+    

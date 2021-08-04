@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        html {
+            box-sizing: border-box;
+            background: #ffc600;
+            font-family: 'helvetica neue';
+            font-size: 20px;
+            font-weight: 200;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        *,*::before, *::after {
+            box-sizing: inherit;
+        }
+
+        .panels {
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .panel {
+            background: #6b0f9c;
+            box-shadow: inset 0 0 0 5px rgba(255, 255,255, 0.1);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            align-items: center;
+            transition:
+                font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+                flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+                background 0.2s;
+             font-size: 20px;
+             background-size: cover;
+             background-position: center;
+             flex: 1;
+             justify-content: center;
+             display: flex;
+             flex-direction: column;
+    }
+    
+    .panel1 {background-image:url(https://images.unsplash.com/photo-1574969046977-b87db24f0a48?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80) }
+    .panel2 {background-image:url(https://images.unsplash.com/photo-1596636929566-73bbbf8af5f5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fG1hcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60)}  
+    .panel3 {background-image:url(https://images.unsplash.com/photo-1456400761117-a768c370cd6d?ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTI2fDIyMTI0ODUyfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60)}  
+    .panel4 {background-image:url(https://images.unsplash.com/photo-1452423668729-43a98052d3ee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)}
+    .panel5 {background-image:url(https://images.unsplash.com/flagged/photo-1587282864638-c42afb4b34e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80)}  
+    
+    .panel > * {
+        margin: 0;
+        width: 100%;
+        transition: transform 0.5s;
+        flex: 1 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .panel > *:first-child { transform: translateY(-100%);}
+    .panel.open-active *:first-child { transform: translateY(0);}
+    .panel > *:last-child { transform: translateY(100%);}
+    .panel.open-active *:last-child { transform: translateY(0);}
+
+    .panel p {
+        text-transform: uppercase;
+        font-family: 'Amatic SC' cursive;
+        text-shadow:  0 0 4px rgba(0, 0, 0, 0.45);
+        font-size: 2em;
+    }
+
+    .panel.open {
+        flex: 5;
+            font-size: 40px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .panel p {
+            font-size: 1em;
+        }
+    }
+
+    </style>
+
+
+<div class="panels">
+    <div class="panel panel1">
+      <p>Você</p>
+      <p>Obrigado</p>
+      <p>You</p>
+    </div>
+    <div class="panel panel2">
+      <p>Tem um </p>
+      <p>Pela</p>
+      <p>Only</p>
+    </div>
+    <div class="panel panel3">
+      <p>Pessímo gosto</p>
+      <p>Sua</p>
+      <p>Live</p>
+    </div>
+    <div class="panel panel4">
+      <p>Para</p>
+      <p>Ajuda</p>
+      <p>Once</p>
+    </div>
+    <div class="panel panel5">
+      <p>Imagens</p>
+      <p>Hoje</p>
+      <p>Baaaaaka</p>
+    </div>
+  </div>
+
+  <script>
+      const panels = document.querySelectorAll('.panel');
+    // Criei 1 const "panels" que recebem as Divs (Linha 95-119).
+    // Para facilitar o processo de modificação das estruturas, utilizei o DOM (Document Object Model). 
+    // Que vai fazer com que essas const recebem um Element DOM.
+
+      function toggleOpen() {
+          this.classList.toggle('open');
+      }
+      // Criei uma Function "toggleOpen" que vai executar o comando da alterancia das aberturas das "páginas".
+      // Utiliziei um "this.classlist.toggle('open')" (No contexto de execução global (fora de qualquer função), THIS refere-se ao objeto global, seja em modo estrito ou não.) para dar inicio a abertura das "páginas".
+      
+      function toggleActive(e) {
+          console.log(e.propertyName);
+          if (e.propertyName.includes('flex')) {
+              this.classList.toggle('open-active')
+          }
+      }
+      // Criei uma Function "toggleActive" que tem "e" como parámetro e vai executar as aberturas das "páginas".
+      // Dei um console.log(e.propertyName) para localizar o Name exato do parámetro ao dar um run.
+      // Criei um if com as condições de "e.propertyName.includes('flex')".
+      // Depois utilizei um  this.classList.toggle('open-active') para iniciar a abertura e expansão das "páginas".
+
+      panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+      panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+      // Basicamente na linha (145) é utilizado um Array Function para que quando um panel for clicado, dar origem a um evento e assim iniciar a função toggleOpen .
+      // Basicamente na linha (146) é utilizado um Array Function para que quando um panel for "fechado", dar origem a um evento e assim iniciar a função toggleActive. 
+  </script>
+</body>
+</html>
